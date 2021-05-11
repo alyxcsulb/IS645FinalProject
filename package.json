@@ -1,0 +1,25 @@
+{
+  "name": "npm-install-is645finalproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alyxcsulb/IS645FinalProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alyxcsulb/IS645FinalProject/issues"
+  },
+  "homepage": "https://github.com/alyxcsulb/IS645FinalProject#readme",
+  "dependencies": {
+    "bootstrap": "^5.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "pg": "^8.6.0"
+  }
+}
