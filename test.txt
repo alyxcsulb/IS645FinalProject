@@ -1,0 +1,108 @@
+// testing different app get/post methods
+
+app.get("/manage", (req, res) => {
+    //res.send ("Hello world...");
+    res.render("manage");
+});
+
+//
+
+app.get("/manage", async (req, res) => {
+    // Omitted validation check
+    const totRecs = await dblib.getTotalRecords();
+    res.render("manage", {
+        type: "get",
+        totRecs: totRecs.totRecords
+    });
+});
+
+//
+
+
+app.get("/manage", async (req, res) => {
+    // Omitted validation check
+    const totRecs = await dblib.getTotalRecords();
+    //Create an empty customer object (To populate form with values)
+    const customer = {
+        c_id: "",
+        c_first_name: "",
+        c_last_name: "",
+        c_state: "",
+        sales_ytd: "",
+        py_sales: ""
+    };
+    res.render("manage", {
+        type: "get",
+        totRecs: totRecs.totRecords,
+        customer: customer
+    });
+});
+
+
+dblib.getTotalRecords()
+    .then(result => {
+        if (result.msg.substring(0, 5) === "Error") {
+            console.log(`Error Encountered.  ${result.msg}`);
+        } else {
+            console.log(`Total number of database records: ${result.totRecords}`);
+        };
+    })
+    .catch(err => {
+        console.log(`Error: ${err.message}`);
+    });
+
+
+    // inserted new test code
+
+app.post("/manage", async (req, res) => {
+    const totRecs = await dblib.getTotalRecords();
+
+    dblib.findCustomers(req.body)
+        .then(result => {
+            res.render("manage", {
+                type: "post",
+                totRecs: totRecs.totRecords,
+                result: result,
+                customer: req.body
+            })
+        })
+        .catch(err => {
+            res.render("manage", {
+                type: "post",
+                totRecs: totRecs.totRecords,
+                result: `Unexpected Error: ${err.message}`,
+                customer: req.body
+            });
+        });
+});
+
+
+// testing export
+
+app.get("/export", (req, res) => {
+    var message = "";
+    res.render("export",{ message: message });
+   });
+   
+   
+   app.post("/export", (req, res) => {
+       const sql = "SELECT * FROM PRODUCT ORDER BY PROD_ID";
+       pool.query(sql, [], (err, result) => {
+           var message = "";
+           if(err) {
+               message = `Error - ${err.message}`;
+               res.render("export", { message: message })
+           } else {
+               var export = "";
+               result.rows.forEach(product => {
+                   export += `${product.prod_id},${product.prod_name},${product.prod_desc},${product.prod_price}\r\n`;
+               });
+               res.header("Content-Type", "text/csv");
+               res.attachment("export.csv");
+               return res.send(export);
+           };
+       });
+   });
+
+
+// inserted new test code

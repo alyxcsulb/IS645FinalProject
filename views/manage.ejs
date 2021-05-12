@@ -1,0 +1,50 @@
+<%- include("_header") -%>
+
+<h1> Find Customers </h1>
+<br>
+<h2> Total number of records in the database: <%= totRecs %> </h2>
+<br>
+<!-- form structure from search screen (default POST) -->
+<!-- Not using bootstrap, just a simple form that you may enhance -->
+<form action="/manage" method="POST">
+    <table>
+        <tr>
+            <td><label for="c_id">ID</label>:</td>
+            <td><input type="number" name="c_id" id="c_id" /></td>
+            <td>(equal)</td>
+        </tr>
+        <tr>
+            <td><label for="c_first_name">First Name</label>:</td>
+            <td><input type="text" name="c_first_name" id="c_first_name" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="c_last_name">Last Name</label>:</td>
+            <td><input type="text" name="c_last_name" id="c_last_name" /></td>
+            <td>(starts with)</td>
+        </tr>
+        <tr>
+            <td><label for="c_state">State</label>:</td>
+            <td><input type="text" name="c_state" id="c_state" /></td>
+            <td>(equals)</td>
+        </tr>
+        <tr>
+            <td><label for="sales_ytd">Sales YTD</label>:</td>
+            <td><input type="number" name="sales_ytd" id="sales_ytd" /></td>
+            <td>(greater than or equal to)</td>
+        </tr>
+        <tr>
+            <td><label for="py_sales">Previous Years Sales</label>:</td>
+            <td><input type="number" name="py_sales" id="py_sales" /></td>
+            <td>(greater than or equal)</td>
+        </tr>
+        <tr>
+            <td span="2">
+                <input type="submit" class="btn btn-primary" value="Find" />
+                <input type="reset" class="btn btn-primary" value="Reset" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+<%- include("_footer") -%>
